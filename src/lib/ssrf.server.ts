@@ -3,7 +3,7 @@
 function ipv4Private(ip: string): boolean {
   const p = ip.split(".").map(Number);
   if (p.length !== 4 || p.some((n) => isNaN(n) || n < 0 || n > 255)) return true;
-  const [a, b] = p;
+  const a = p[0]!, b = p[1]!;
   return (
     a === 0 || a === 10 || a === 127 || a >= 224 ||
     (a === 100 && b >= 64 && b <= 127) ||
@@ -20,7 +20,7 @@ function ipv6Private(ip: string): boolean {
   if (s === "::" || s === "::1") return true;
   if (s.startsWith("fc") || s.startsWith("fd") || s.startsWith("fe8") || s.startsWith("fe9") || s.startsWith("fea") || s.startsWith("feb") || s.startsWith("ff")) return true;
   const m = s.match(/::ffff:(\d+\.\d+\.\d+\.\d+)$/);
-  if (m) return ipv4Private(m[1]);
+  if (m) return ipv4Private(m[1]!);
   return false;
 }
 
