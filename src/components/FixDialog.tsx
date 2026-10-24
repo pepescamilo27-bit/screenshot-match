@@ -16,7 +16,7 @@ import { FixStateBadge } from "./badges";
 export function FixDialog({
   analysis, finding, existing, open, onOpenChange, onSaved,
 }: {
-  analysis: AnalysisResult; finding: Finding | null; existing?: StoredFix;
+  analysis: AnalysisResult; finding: Finding | null; existing?: StoredFix | undefined;
   open: boolean; onOpenChange: (o: boolean) => void; onSaved: () => void;
 }) {
   const run = useServerFn(prepareFix);

@@ -29,7 +29,7 @@ const fixInput = z.object({
 export const prepareFix = createServerFn({ method: "POST" })
   .inputValidator((d: z.infer<typeof fixInput>) => fixInput.parse(d))
   .handler(async ({ data }): Promise<{ ok: true; proposal: FixProposal } | { ok: false; error: string }> => {
-    const apiKey = process.env.LOVABLE_API_KEY;
+    const apiKey = process.env['LOVABLE_API_KEY'];
     if (!apiKey) return { ok: false, error: "Serviço de IA não configurado." };
     const { createOpenAI } = await import("@ai-sdk/openai");
     const { streamText } = await import("ai");
@@ -62,7 +62,7 @@ ${data.ownerInput ? `Dado confirmado pelo proprietário: ${data.ownerInput}` : "
 
     try {
       const result = streamText({
-        model: openai.responses("openai/gpt-6-astra"),
+        model: openai.responses("openai/gpt-6-astra") as unknown as Parameters<typeof streamText>[0]["model"],
         system,
         prompt,
         providerOptions: {

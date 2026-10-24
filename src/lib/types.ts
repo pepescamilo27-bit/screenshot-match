@@ -12,9 +12,9 @@ export interface Finding {
   status: CheckStatus;
   solution: string;
   /** Snippet of original HTML, when available, for fix preparation */
-  snippet?: string;
+  snippet?: string | undefined;
   /** Whether fix needs owner input (e.g. WhatsApp number) */
-  needsInput?: { label: string; placeholder: string };
+  needsInput?: { label: string; placeholder: string } | undefined;
 }
 
 export interface AnalysisResult {
