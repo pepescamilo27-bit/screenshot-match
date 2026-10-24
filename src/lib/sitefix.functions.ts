@@ -3,7 +3,7 @@ import { z } from "zod";
 import type { AnalysisResult, FixProposal } from "./types";
 
 export const analyzeSite = createServerFn({ method: "POST" })
-  .inputValidator((d: { url: string }) => z.object({ url: z.string().min(1).max(2048) }).parse(d))
+  .validator((d: { url: string }) => z.object({ url: z.string().min(1).max(2048) }).parse(d))
   .handler(async ({ data }): Promise<{ ok: true; result: AnalysisResult } | { ok: false; error: string }> => {
     const { analyzeUrl } = await import("./analyzer.server");
     try {
@@ -27,7 +27,7 @@ const fixInput = z.object({
 });
 
 export const prepareFix = createServerFn({ method: "POST" })
-  .inputValidator((d: z.infer<typeof fixInput>) => fixInput.parse(d))
+  .validator((d: z.infer<typeof fixInput>) => fixInput.parse(d))
   .handler(async ({ data }): Promise<{ ok: true; proposal: FixProposal } | { ok: false; error: string }> => {
     const apiKey = process.env['LOVABLE_API_KEY'];
     if (!apiKey) return { ok: false, error: "Serviço de IA não configurado." };
